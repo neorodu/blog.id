@@ -1,31 +1,31 @@
     const posts = [
       {
-        title: "Hari Ini Aku Belajar Animasi Scroll Lagi",
+        title: "Mengapa Banyak Bisnis Bertahan, Tapi Tidak Pernah Benar-Benar Berkembang?",
         date: "19 Februari 2026",
-        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop",
-        excerpt: "Ternyata pakai Intersection Observer + CSS variable jauh lebih smooth daripada scroll event biasa...",
-        link: "post.html?id=1"
+        image: "img/bisnis.jpg",
+        excerpt: "Mari kita lihat,Di banyak kota, kita bisa menemukan bisnis yang sudah berjalan.",
+        link: "post2.html?id=1"
       },
       {
-        title: "Kenapa Tailwind Masih Juara di 2026?",
+        title: "Apa bukti nyata dari jodoh datang di waktu yang tepat?",
         date: "15 Februari 2026",
-        image: "https://images.unsplash.com/photo-1551650975-60cb5d043c9b?w=800&auto=format&fit=crop",
-        excerpt: "Utility-first bukan cuma tren, tapi sudah jadi standar industri. Ini alasannya...",
-        link: "post.html?id=2"
+        image: "img/jodoh.jpg",
+        excerpt: "Bukan ketika semuanya sudah sempurna,",
+        link: "post3.html?id=2"
       },
       {
-        title: "Cikarang Malam – Foto Pakai Phone Doang",
+        title: "Bagaimana cara paling ampuh menghadapi rasa jatuh cinta?",
         date: "10 Februari 2026",
-        image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop",
-        excerpt: "Malam di kawasan industri ternyata punya vibe sendiri kalau difoto pake mode night...",
-        link: "post.html?id=3"
+        image: "img/cikarang.jpg",
+        excerpt: "Jatuh cinta itu indah tapi deras kalau tidak di sikapi dengan baik",
+        link: "Post4.html?id=3"
       },
       {
-        title: "Migrasi dari Next.js ke Astro, Worth It?",
+        title: "Berhentilah marah terhadap sifat alami perempuan.",
         date: "5 Februari 2026",
-        image: "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=800&auto=format&fit=crop",
-        excerpt: "Loading time turun drastis, bundle size mengecil, tapi ada trade-off...",
-        link: "post.html?id=4"
+        image: "img/berhenti.jpg",
+        excerpt: "Sifat alami wanita tidak akan pernah berubah",
+        link: "Post5.html?id=4"
       }
     ];
 
@@ -54,3 +54,26 @@
     hamburger.classList.toggle('active');
     navLinks.classList.toggle('active');
   });
+
+// ================= PARTICLE GENERATOR =================
+function createParticle() {
+  const particle = document.createElement("div");
+  particle.classList.add("particle");
+
+  const size = Math.random() * 6 + 2;
+  particle.style.width = size + "px";
+  particle.style.height = size + "px";
+
+  particle.style.left = Math.random() * window.innerWidth + "px";
+  particle.style.bottom = "-10px";
+
+  particle.style.animationDuration = (Math.random() * 5 + 5) + "s";
+
+  document.body.appendChild(particle);
+
+  setTimeout(() => {
+    particle.remove();
+  }, 10000);
+}
+
+setInterval(createParticle, 200);
