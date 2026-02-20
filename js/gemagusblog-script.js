@@ -4,14 +4,14 @@
         date: "19 Februari 2026",
         image: "img/bisnis.jpg",
         excerpt: "Mari kita lihat,Di banyak kota, kita bisa menemukan bisnis yang sudah berjalan.",
-        link: "post2.html?id=1"
+        link: "Post2.html?id=1"
       },
       {
         title: "Apa bukti nyata dari jodoh datang di waktu yang tepat?",
         date: "15 Februari 2026",
         image: "img/jodoh.jpg",
         excerpt: "Bukan ketika semuanya sudah sempurna,",
-        link: "post3.html?id=2"
+        link: "Post3.html?id=2"
       },
       {
         title: "Bagaimana cara paling ampuh menghadapi rasa jatuh cinta?",
