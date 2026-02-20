@@ -4,28 +4,28 @@
         date: "19 Februari 2026",
         image: "img/bisnis.jpg",
         excerpt: "Mari kita lihat,Di banyak kota, kita bisa menemukan bisnis yang sudah berjalan.",
-        link: "Post2.html?id=1"
+        link: "Post2.html?id=2"
       },
       {
         title: "Apa bukti nyata dari jodoh datang di waktu yang tepat?",
         date: "15 Februari 2026",
         image: "img/jodoh.jpg",
         excerpt: "Bukan ketika semuanya sudah sempurna,",
-        link: "Post3.html?id=2"
+        link: "Post3.html?id=3"
       },
       {
         title: "Bagaimana cara paling ampuh menghadapi rasa jatuh cinta?",
         date: "10 Februari 2026",
         image: "img/cikarang.jpg",
         excerpt: "Jatuh cinta itu indah tapi deras kalau tidak di sikapi dengan baik",
-        link: "Post4.html?id=3"
+        link: "Post4.html?id=4"
       },
       {
         title: "Berhentilah marah terhadap sifat alami perempuan.",
         date: "5 Februari 2026",
         image: "img/berhenti.jpg",
         excerpt: "Sifat alami wanita tidak akan pernah berubah",
-        link: "Post5.html?id=4"
+        link: "Post5.html?id=5"
       }
     ];
 
