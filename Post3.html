@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="page-title">Artikel </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  
+  <style>
+    :root {
+      --bg: #0f172a;
+      --glass: rgba(30, 41, 59, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #c084fc;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.7;
+      min-height: 100vh;
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ====================== NAVBAR ====================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--glass);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 20px;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #c084fc, #a78bfa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -6px;
+      left: 0;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after { width: 100%; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ====================== ARTIKEL ====================== */
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      text-decoration: none;
+      margin: 30px 0;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    .back:hover { opacity: 0.8; }
+
+    article {
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      margin-bottom: 60px;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, #c084fc, #a78bfa, #7dd3fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.2;
+    }
+
+    .meta {
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .featured-img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin: 32px 0;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    }
+
+    p, li { margin-bottom: 1.4em; color: #cbd5e1; font-size: 1.05rem; }
+
+    h2, h3 { margin: 2em 0 1em; color: var(--accent); }
+
+    pre {
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+
+    code {
+      background: rgba(0,0,0,0.3);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      color: #f472b6;
+    }
+
+    /* ====================== FOOTER ====================== */
+    footer {
+      margin-top: 60px;
+      padding: 40px 20px 60px;
+      text-align: center;
+      border-top: 1px solid var(--glass-border);
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-bottom: 20px;
+    }
+
+    .social-icons a {
+      color: var(--text-muted);
+      font-size: 1.8rem;
+      transition: all 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: var(--accent);
+      transform: translateY(-4px) scale(1.15);
+    }
+
+    /* ====================== RESPONSIVE ====================== */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.2rem; }
+      article { padding: 28px; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--glass);
+        backdrop-filter: blur(16px);
+        flex-direction: column;
+        padding: 20px;
+        border-bottom: 1px solid var(--glass-border);
+      }
+      .nav-links.active { display: flex; }
+      .hamburger { display: flex; }
+      .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+      .hamburger.active span:nth-child(2) { opacity: 0; }
+      .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">Gemagus</a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+        <li><a href="#bantuan">Bantuan</a></li>
+        <li><a href="#" target="_blank" rel="noopener">Marketplace</a></li>
+      </ul>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <a href="index.html" class="back">
+      <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+    </a>
+
+    <article>
+      <h1 id="title">Apa bukti nyata darijodoh datang di waktu yang tepat?</h1>
+      
+      <img 
+        src="img/jodoh.jpg" 
+        alt="Featured image" 
+        class="featured-img"
+      >
+      <div class="meta">
+        <span><i class="fa-regular fa-calendar"></i> 19 Februari 2026</span>
+        <span><i class="fa-regular fa-clock"></i> 4 menit baca</span>
+      </div>
+      <p>Bukan ketika semuanya sudah sempurna,
+tapi ketika hati berhenti mencari yang lebih baik,
+dan mulai belajar menjaga yang ada..</p>
+
+    
+      <h2></h2>
+      <p>Kadang, dulu kamu bertemu dia di waktu yang salah.</p>
+
+      <pre><code>jodoh dimanar(...);
+      </code></pre>
+
+      <p>Sama orang yang tepat, tapi dengan versi dirimu yang belum siap.
+Masih ingin dimengerti, belum bisa memahami.
+Masih ingin dicintai, belum bisa mencintai balik dengan sabar.
+Lalu waktu berjalan.
+Kamu belajar kalah tanpa merasa hancur.
+Belajar menahan diri,
+dan tahu bahwa cinta bukan sekadar perasaan, tapi juga keputusan.
+
+Dan di situlah, tanpa suara yang heboh,
+dia datang.
+Bukan membawa kejutan,
+tapi ketenangan.
+Kalian mungkin tetap berdebat,
+tetap berbeda,
+tapi tak lagi ingin menang.
+Karena sekarang, yang penting bukan siapa yang benar
+melainkan siapa yang tetap tinggal.
+Berhenti saling menguji,
+dan mulai saling menjaga..</p>
+    </article>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+      © 2026 Gemagus Blog
+    </p>
+    <div class="social-icons">
+      <a href="https://facebook.com/tuyingcowok" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://youtube.com/@tuyingcowok" target="_blank"><i class="fab fa-youtube"></i></a>
+      <a href="https://instagram.com/tuyingcowok" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+
+  </footer>
+
+  <script>
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    if (hamburger && navLinks) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+      });
+    }
+  </script>
+
+</body>
+</html>
