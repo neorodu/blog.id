@@ -53,4 +53,117 @@
   <script src="js/Tuyingg.js"></script>
   
 </body>
+  <!-- Grok AI Chat Toggle Widget -->
+<div id="grok-chat-container" style="position: fixed; bottom: 90px; right: 20px; width: 380px; height: 520px; background: white; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden; z-index: 9999;">
+  <div style="background: #007bff; color: white; padding: 12px; font-weight: bold; text-align: center; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+    Asisten neorodu
+    <span onclick="toggleChat()" style="float: right; cursor: pointer; font-size: 20px;">×</span>
+  </div>
+  <div id="grok-chat-messages" style="flex: 1; padding: 15px; overflow-y: auto; background: #f9f9f9;"></div>
+  <div style="display: flex; border-top: 1px solid #ddd; padding: 10px; background: white;">
+    <input id="grok-chat-input" type="text" placeholder="Tanya soal kamu.." style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-right: 8px;">
+    <button onclick="sendGrokMessage()" style="padding: 10px 18px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer;">Kirim</button>
+  </div>
+</div>
+
+<!-- Tombol Toggle (pojok bawah kanan) -->
+<button id="grok-toggle-btn" onclick="toggleChat()" style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #007bff; color: white; border: none; border-radius: 50%; font-size: 24px; box-shadow: 0 4px 15px rgba(0,123,255,0.4); cursor: pointer; z-index: 10000;">💬</button>
+
+<script>
+  const GROK_API_KEY = 'YOUR_API_KEY_HERE'; // <-- GANTI INI DENGAN API KEY KAMU!
+  const MODEL = 'grok-4-1-fast-reasoning'; // Model terbaru & cepat 2026 (bisa ganti ke grok-4-latest kalau mau, cek docs.x.ai)
+
+  let messages = [
+    {
+      role: "system",
+      content: "Kamu adalah asisten ramah dan santai untuk website produk ini. Jawab HANYA pertanyaan seputar produk, harga, stok, cara beli, atau fitur. Gunakan bahasa Indonesia sehari-hari. Kalau pertanyaan di luar topik produk, bilang 'Maaf, aku cuma bisa bantu soal produk di sini ya!' Jangan jawab hal lain."
+    }
+    // Tambah history chat nanti otomatis
+  ];
+
+  function toggleChat() {
+    const chatContainer = document.getElementById('grok-chat-container');
+    const isHidden = chatContainer.style.display === 'none' || chatContainer.style.display === '';
+    chatContainer.style.display = isHidden ? 'flex' : 'none';
+  }
+
+  function addMessage(sender, text) {
+    const messagesDiv = document.getElementById('grok-chat-messages');
+    const msgDiv = document.createElement('div');
+    msgDiv.style.marginBottom = '12px';
+    msgDiv.style.padding = '10px';
+    msgDiv.style.borderRadius = '10px';
+    msgDiv.style.maxWidth = '80%';
+
+    if (sender === 'You') {
+      msgDiv.style.background = '#007bff';
+      msgDiv.style.color = 'white';
+      msgDiv.style.alignSelf = 'flex-end';
+      msgDiv.style.marginLeft = 'auto';
+    } else {
+      msgDiv.style.background = '#e9ecef';
+      msgDiv.style.color = 'black';
+      msgDiv.style.alignSelf = 'flex-start';
+    }
+
+    msgDiv.textContent = text;
+    messagesDiv.appendChild(msgDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight; // auto scroll ke bawah
+  }
+
+  async function sendGrokMessage() {
+    const input = document.getElementById('grok-chat-input');
+    const userMessage = input.value.trim();
+    if (!userMessage) return;
+
+    addMessage('You', userMessage);
+    messages.push({ role: 'user', content: userMessage });
+    input.value = '';
+
+    try {
+      addMessage('Grok', 'Sedang mikir...'); // placeholder loading
+
+      const response = await fetch('https://api.x.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROK_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: MODEL,
+          messages: messages,
+          temperature: 0.7, // agak kreatif tapi tetap fokus
+          max_tokens: 500,
+          stream: false
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} - ${await response.text()}`);
+      }
+
+      const data = await response.json();
+      const reply = data.choices[0].message.content.trim();
+
+      // Hapus loading message & tambah reply asli
+      const loadingMsg = document.getElementById('grok-chat-messages').lastChild;
+      if (loadingMsg && loadingMsg.textContent.includes('Sedang mikir')) {
+        loadingMsg.remove();
+      }
+      addMessage('Grok', reply);
+      messages.push({ role: 'assistant', content: reply });
+
+    } catch (error) {
+      console.error(error);
+      addMessage('Grok', 'Wah, ada masalah nih... Coba lagi ya! (Error: ' + error.message + ')');
+    }
+  }
+
+  // Optional: Kirim pesan dengan Enter
+  document.getElementById('grok-chat-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      sendGrokMessage();
+    }
+  });
+</script>
 </html>
