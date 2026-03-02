@@ -121,50 +121,54 @@
     input.value = '';
 
     try {
-      addMessage('Grok', 'Sedang mikir...'); // placeholder loading
-const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
-      const response = await fetch('https://api.x.ai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${GROK_API_KEY}`
-        },
-        body: JSON.stringify({
-          model: MODEL,
-          messages: messages,
-          temperature: 0.7, // agak kreatif tapi tetap fokus
-          max_tokens: 500,
-          stream: false
-        })
-      });
+  addMessage('Grok', 'Sedang mikir...'); // placeholder loading
 
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status} - ${await response.text()}`);
-      }
+  const targetUrl = 'https://api.x.ai/v1/chat/completions';
+  const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
 
-      const data = await response.json();
-      const reply = data.choices[0].message.content.trim();
+  const response = await fetch(proxyUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${GROK_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: MODEL,
+      messages: messages,
+      temperature: 0.7,
+      max_tokens: 500,
+      stream: false
+    })
+  });
 
-      // Hapus loading message & tambah reply asli
-      const loadingMsg = document.getElementById('grok-chat-messages').lastChild;
-      if (loadingMsg && loadingMsg.textContent.includes('Sedang mikir')) {
-        loadingMsg.remove();
-      }
-      addMessage('Grok', reply);
-      messages.push({ role: 'assistant', content: reply });
-
-    } catch (error) {
-      console.error(error);
-      addMessage('Grok', 'Wah, ada masalah nih... Coba lagi ya! (Error: ' + error.message + ')');
-    }
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Proxy error: ${response.status} - ${errorText}`);
   }
 
-  // Optional: Kirim pesan dengan Enter
-  document.getElementById('grok-chat-input').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-      sendGrokMessage();
-    }
-  });
+  const data = await response.json();
+  const reply = data.choices[0].message.content.trim();
+
+  // Hapus loading message
+  const messagesDiv = document.getElementById('grok-chat-messages');
+  const loadingMsg = messagesDiv.lastChild;
+  if (loadingMsg && loadingMsg.textContent.includes('Sedang mikir')) {
+    loadingMsg.remove();
+  }
+
+  addMessage('Grok', reply);
+  messages.push({ role: 'assistant', content: reply });
+
+} catch (error) {
+  console.error(error);
+  // Hapus loading kalau error
+  const messagesDiv = document.getElementById('grok-chat-messages');
+  const loadingMsg = messagesDiv.lastChild;
+  if (loadingMsg && loadingMsg.textContent.includes('Sedang mikir')) {
+    loadingMsg.remove();
+  }
+  addMessage('Grok', 'Wah, ada masalah koneksi nih... Coba lagi ya! (Error: ' + error.message + ')');
+}
 </script>
 </body>
 </html>
