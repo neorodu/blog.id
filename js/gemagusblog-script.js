@@ -1,4 +1,12 @@
     const posts = [
+     
+             {
+        title: " Bagaimana jika kita sudah putus asa sama hidup, seperti tidak melihat jalan keluar sama sekali? ",
+        date: "23 maret 2026",
+        image: "img/bisnis.jpg",
+        excerpt: " Saya benar benar akrab dengan kondisi ini. Misalnya saat hasil kerja jauh di bawah kebutuhan. banyak,. ",
+        link: "Post6.html?id=2"
+      }, 
       {
         title: "Mengapa Banyak Bisnis Bertahan, Tapi Tidak Pernah Benar-Benar Berkembang?",
         date: "19 Februari 2026",
