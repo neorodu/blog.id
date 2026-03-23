@@ -1,6 +1,6 @@
     const posts = [
      
-             {
+    {
         title: " Bagaimana jika kita sudah putus asa sama hidup, seperti tidak melihat jalan keluar sama sekali? ",
         date: "23 maret 2026",
         image: "img/bisnis.jpg",
