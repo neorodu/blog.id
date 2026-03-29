@@ -1,5 +1,12 @@
     const posts = [
-     
+        
+     {
+        title: "Bagaimana cara mengetahui seseorang tidak mencintai kita?",
+        date: "29 maret 2026",
+        image: "https://i.imgur.com/vbK438I.jpeg",
+        excerpt: "Kadang jawabannya bukan ada pada dia, tapi ada pada perasaan kita sendiri,.",
+        link: "Post7.html?id=2"
+      }, 
     {
         title: " Bagaimana jika kita sudah putus asa sama hidup, seperti tidak melihat jalan keluar sama sekali? ",
         date: "23 maret 2026",
