@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="page-title">Artikel </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  
+  <style>
+    :root {
+      --bg: #0f172a;
+      --glass: rgba(30, 41, 59, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #c084fc;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: var(--text);
+      font-family: "Courier New", monospace;
+      line-height: 1.7;
+      min-height: 100vh;
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ====================== NAVBAR ====================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--glass);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 20px;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #c084fc, #a78bfa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -6px;
+      left: 0;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after { width: 100%; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ====================== ARTIKEL ====================== */
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      text-decoration: none;
+      margin: 30px 0;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    .back:hover { opacity: 0.8; }
+
+    article {
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      margin-bottom: 60px;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, #c084fc, #a78bfa, #7dd3fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .meta {
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .featured-img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin: 32px 0;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    }
+
+    p, li { margin-bottom: 1.4em; color: #cbd5e1; font-size: 1.05rem; }
+
+    h2, h3 { margin: 2em 0 1em; color: var(--accent); }
+
+    pre {
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+
+    code {
+      background: rgba(0,0,0,0.3);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      color: #f472b6;
+    }
+
+    /* ====================== FOOTER ====================== */
+    footer {
+      margin-top: 60px;
+      padding: 40px 20px 60px;
+      text-align: center;
+      border-top: 1px solid var(--glass-border);
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-bottom: 20px;
+    }
+
+    .social-icons a {
+      color: var(--text-muted);
+      font-size: 1.8rem;
+      transition: all 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: var(--accent);
+      transform: translateY(-4px) scale(1.15);
+    }
+
+    /* ====================== RESPONSIVE ====================== */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.2rem; }
+      article { padding: 28px; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--glass);
+        backdrop-filter: blur(16px);
+        flex-direction: column;
+        padding: 20px;
+        border-bottom: 1px solid var(--glass-border);
+      }
+      .nav-links.active { display: flex; }
+      .hamburger { display: flex; }
+      .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+      .hamburger.active span:nth-child(2) { opacity: 0; }
+      .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+
+
+  <div class="container">
+    <a href="Blog.html" class="back">
+      <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+    </a>
+
+    <article>
+      <h1 id="title">Bagaimana cara mengetahui seseorang tidak mencintai kita?</h1>
+      
+      <img 
+        src="https://i.imgur.com/vbK438I.jpeg" 
+        alt="Featured image" 
+        class="featured-img"
+      >
+      <div class="meta">
+        <span><i class="fa-regular fa-calendar"></i> 29 maret 2026</span>
+        <i>👤 admin: karim</i>
+        <span><i class="fa-regular fa-clock"></i> 8 jam</span>
+      </div>
+      <p>Kadang jawabannya bukan ada pada dia.
+Tapi pada perasaan kita sendiri..</p>
+
+    
+      <h2></h2>
+      <p>Kalau bersama seseorang,
+kita lebih sering merasa cemas daripada tenang…
+itu sudah jadi bahasa yang cukup jujur.
+Kita jadi sering menebak nebak.
+Sering overthinking.
+Sering bertanya dalam hati:
+Aku ini sebenarnya dianggap apa?</p>
+
+      <pre><code>Padahal kalau dicintai,
+perasaan yang paling sering muncul justru sederhana:
+tenang.
+Bukan tanpa masalah.
+Bukan tanpa konflik.</code></pre>
+
+      <p>Tapi ada rasa bahwa kita tidak perlu berjuang sendirian untuk dipilih.
+Orang yang tidak mencintai,
+biasanya tidak benar benar pergi…
+tapi juga tidak pernah bena benar datang.
+Dia ada di antara nya, 
+cukup dekat untuk kita berharap,
+tapi cukup jauh untuk kita tidak pernah merasa memiliki.
+.Dan di situ kita sering terjebak.
+Bertahan bukan karena bahagia,
+tapi karena sudah terlalu jauh berharap.
+Ada satu cara sederhana untuk melihatnya dengan jernih:
+coba bayangkan kita berhenti berusaha.
+Tidak menghubungi duluan.
+Tidak mencari.
+Tidak mengejar.
+Kalau setelah itu semuanya benar benar hilang…
+maka mungkin sejak awal,
+memang hanya kita yang menjaga hubungan itu tetap hidup.
+Menyadari ini memang tidak nyaman.
+
+Tapi kadang,
+yang paling menyakitkan bukan kenyataannya…
+
+melainkan berapa lama kita menolak untuk melihatnya.
+Dan mungkin di titik itu,
+yang perlu dilakukan bukan lagi menunggu dia berubah.
+Tapi mulai jujur pada diri sendiri:
+apakah kita sedang dicintai…
+atau hanya sedang terbiasa berharap?</p>
+    </article>
+  </div>
+  <audio id="musik" autoplay loop muted>
+    <source src="https://archive.org/download/rising-from-the-ember/Rising%20From%20The%20Ember.mp3" type="audio/mpeg">
+    Browser Anda tidak mendukung elemen audio.
+  </audio>
+  <!-- Footer -->
+  <footer>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+      © 2026 Gemagus Blog
+    </p>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/share/1C2PsRtD46/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://youtube.com/@tuyin" target="_blank"><i class="fab fa-youtube"></i></a>
+      <a href="https://instagram.com/tuying" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+
+  </footer>
+
+  <script>
+    
+        window.addEventListener("load", function() {
+      var audio = document.getElementById("musik");
+      var playPromise = audio.play();
+
+      if (playPromise !== undefined) {
+        playPromise.then(function() {
+          console.log("Musik mulai diputar secara otomatis.");
+        }).catch(function(error) {
+          console.log("Autoplay diblokir:", error);
+        });
+      }
+    });
+
+
+    document.addEventListener("click", function() {
+      var audio = document.getElementById("musik");
+      audio.muted = false;
+      audio.play().then(function() {
+        console.log("Musik main");
+      }).catch(function(error) {
+        console.log("Gagal memulai musik:", error);
+      });
+    }, { once: true });
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    if (hamburger && navLinks) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+      });
+    }
+  </script>
+
+</body>
+</html>
